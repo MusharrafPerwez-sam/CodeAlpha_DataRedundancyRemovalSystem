@@ -82,6 +82,6 @@ def view_entries():
     return render_template('view.html', data=data)
 
 # Render-specific: bind to dynamic PORT
-if __name__ == '_main_':
+if __name__ == 'main':
     port = int(os.environ.get('PORT', 5000))  # required for Render
     app.run(host='0.0.0.0', port=port)

@@ -20,24 +20,28 @@ entries = [
         "name": "Alice Johnson",  # Should insert
         "email": "alice@example.com",
         "phone": "1234567890",
+        "colony": "Green Park",
         "timestamp": "2025-06-14 14:00"
     },
     {
         "name": "Alice Johnson",  # Duplicate
         "email": "alice@example.com",
         "phone": "1234567890",
+        "colony": "Green Park",
         "timestamp": "2025-06-14 14:05"
     },
     {
         "name": "Alyce Jonson",   # False positive (fuzzy match)
         "email": "alyce@example.com",
         "phone": "1234567899",
+        "colony": "Green Park",
         "timestamp": "2025-06-14 14:10"
     },
     {
         "name": "Bob Smith",      # Should insert
         "email": "bob@example.com",
         "phone": "9876543210",
+        "colony": "Silver Colony",
         "timestamp": "2025-06-14 14:15"
     }
 ]

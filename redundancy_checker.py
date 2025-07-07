@@ -37,19 +37,27 @@ def insert_entry(entry):
     conn = get_connection()
     cursor = conn.cursor()
 
-    if is_duplicate(entry, cursor):
-        print("Duplicate entry detected. Not inserted.")
-    elif is_false_positive(entry, cursor):
-        print("Similar (False Positive) entry found. Review required.")
-    else:
-        try:
+    try:
+        if is_duplicate(entry, cursor):
+            print("❌ Duplicate entry detected. Not inserted.")
+        elif is_false_positive(entry, cursor):
+            print("⚠️ Similar (False Positive) entry found. Needs review.")
+        else:
             cursor.execute('''
-                INSERT INTO entries (name, email, phone, timestamp)
-                VALUES (?, ?, ?, ?)
-            ''', (entry["name"], entry["email"], entry["phone"], entry["timestamp"]))
+                INSERT INTO entries (name, email, phone, colony, timestamp)
+                VALUES (?, ?, ?, ?, ?)
+            ''', (
+                entry["name"],
+                entry["email"],
+                entry["phone"],
+                entry["colony"],
+                entry["timestamp"]
+            ))
             conn.commit()
-            print("Entry inserted successfully.")
-        except sqlite3.IntegrityError:
-            print("Database rejected the entry as duplicate (UNIQUE constraint).")
-
-    conn.close()
+            print("✅ Entry inserted successfully.")
+    except sqlite3.IntegrityError:
+        print("❌ Database rejected the entry as duplicate (UNIQUE constraint).")
+    except Exception as e:
+        print(f"❌ Error inserting entry: {e}")
+    finally:
+        conn.close()
